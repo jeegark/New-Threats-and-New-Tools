@@ -119,8 +119,8 @@ textarea {
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
-  gap: 12px;
-  padding: clamp(10px, 1.6vw, 14px);
+  gap: 17px;
+  padding: clamp(14px, 2.2vw, 20px);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-xl);
   background:
@@ -176,23 +176,23 @@ h4 {
 
 h1 {
   margin-top: 8px;
-  font-size: clamp(1.6rem, 3.8vw, 2.4rem);
-  line-height: 0.98;
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  line-height: 1;
 }
 
 .hero-dek {
-  margin-top: 10px;
+  margin-top: 14px;
   max-width: 74ch;
   color: var(--ink);
-  font-size: 0.88rem;
-  line-height: 1.4;
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
+  gap: 12px;
+  margin-top: 18px;
 }
 
 .primary-button,
@@ -203,8 +203,8 @@ h1 {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 40px;
-  padding: 0 14px;
+  min-height: 44px;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid transparent;
   text-decoration: none;
@@ -246,7 +246,7 @@ h1 {
 .hero-side {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: 8px;
+  gap: 12px;
   align-items: start;
 }
 
@@ -263,8 +263,8 @@ h1 {
 
 .schematic-card {
   display: grid;
-  gap: 8px;
-  padding: 10px 12px;
+  gap: 10px;
+  padding: 14px 16px;
 }
 
 .schematic-grid {
@@ -338,16 +338,16 @@ h1 {
 .scenario-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   padding: 0;
   margin: 0;
   list-style: none;
   color: var(--muted-strong);
-  font-size: 0.76rem;
+  font-size: 0.86rem;
 }
 
 .scenario-list li {
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid rgba(221, 234, 252, 0.18);
   background: rgba(255, 255, 255, 0.07);
@@ -360,36 +360,36 @@ h1 {
 .hero-stat-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 11px;
 }
 
 .hero-stat {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 12px 14px;
+  padding: 14px 16px;
 }
 
 .hero-stat strong {
   display: block;
-  margin-top: 6px;
-  font-size: 0.82rem;
-  line-height: 1.28;
+  margin-top: 8px;
+  font-size: 0.94rem;
+  line-height: 1.4;
   color: var(--ink);
 }
 
 .phase-nav {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 14px;
 }
 
 .phase-nav-link {
   display: grid;
-  gap: 4px;
-  min-height: 58px;
-  padding: 10px 12px;
+  gap: 6px;
+  min-height: 72px;
+  padding: 12px 14px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(221, 234, 252, 0.16);
   background:
@@ -418,22 +418,22 @@ h1 {
 
 .phase-nav-step {
   color: var(--muted);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .phase-nav-label {
-  font-size: 0.88rem;
+  font-size: 0.98rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .phase-nav-status {
   color: var(--muted-strong);
-  font-size: 0.76rem;
-  line-height: 1.25;
+  font-size: 0.84rem;
+  line-height: 1.35;
 }
 
 .control-room {
@@ -458,7 +458,7 @@ h1 {
 }
 
 .metric-card {
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: var(--radius-lg);
 }
 
@@ -475,7 +475,7 @@ h1 {
 }
 
 .metric-value {
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -518,7 +518,7 @@ h1 {
 
 .progress-panel {
   margin-top: 10px;
-  padding: 10px 12px 12px;
+  padding: 12px 14px 14px;
   border-radius: var(--radius-lg);
 }
 
