@@ -1,10 +1,10 @@
 # Grey Zone Grid
 
-This is a standalone static game built from RenewableUK's March 2026 report:
+This is a standalone static game inspired by RenewableUK's March 2026 report:
 
 - `New threats and new tools: reinventing energy security for an era of instability`
 
-The game turns the report's tabletop wargame into an interactive single-player
+The game turns that tabletop scenario set into an interactive single-player
 exercise where the player manages:
 
 - system stability
@@ -14,24 +14,28 @@ exercise where the player manages:
 
 ## What It Does
 
-The experience is structured in three parts:
+The experience is structured as a five-page run:
 
 1. `Preparation`
-   Choose two resilience tools adapted from the report's six recommendations.
-2. `Six decision rounds`
-   Play through:
-   - North Sea gas-pipeline sabotage
-   - a wind-farm cyberattack via compromised software
-   - malware at a major gas terminal
-3. `Debrief`
-   Review the final doctrine, strategic trade-offs, and report-informed next
-   steps.
+   Choose two resilience tools before the crisis begins.
+2. `Scenario One`
+   Respond to North Sea gas-pipeline sabotage.
+3. `Scenario Two`
+   Handle a renewable-fleet cyber intrusion.
+4. `Scenario Three`
+   Manage malware at a major gas terminal and the rest of winter.
+5. `Debrief`
+   Review the doctrine, trade-offs, and weak points your run created.
 
 ## Files
 
-- `index.html`: page structure
+- `index.html`: preparation page
+- `scenario-one.html`: pipeline sabotage phase
+- `scenario-two.html`: renewable cyber phase
+- `scenario-three.html`: terminal malware phase
+- `debrief.html`: after-action page
 - `styles.css`: visual system and responsive layout
-- `app.js`: scenario model, scoring, tool bonuses, and debrief logic
+- `app.js`: scenario model, page flow, scoring, tool bonuses, and debrief logic
 
 ## Local Development
 
@@ -52,6 +56,5 @@ http://127.0.0.1:8000
 ## Notes
 
 - The scenario content is paraphrased from the report rather than reproduced.
-- The game keeps the report's central tension intact: the UK can maintain
-  supply and still lose strategically if it relies too heavily on expensive gas
-  and weak public coordination.
+- The game keeps progress in `localStorage`, so scores and choices carry across
+  the separate phase pages.

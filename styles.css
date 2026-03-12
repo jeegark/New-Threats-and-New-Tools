@@ -17,6 +17,10 @@
   --blue: #6da8ff;
   --violet: #8d95ff;
   --tag-ink: #f2f7ff;
+  --phase-glow: rgba(255, 190, 92, 0.16);
+  --phase-chip-start: #8a3f00;
+  --phase-chip-end: #ffbe5c;
+  --phase-soft: rgba(255, 190, 92, 0.18);
   --shadow: 0 24px 70px rgba(1, 8, 19, 0.42);
   --radius-xl: 30px;
   --radius-lg: 20px;
@@ -42,9 +46,44 @@ body {
   color: var(--ink);
   font-family: "Space Grotesk", system-ui, sans-serif;
   background:
-    radial-gradient(circle at top right, rgba(109, 168, 255, 0.18), transparent 28%),
-    radial-gradient(circle at left 20%, rgba(100, 214, 214, 0.14), transparent 24%),
+    radial-gradient(circle at top right, var(--phase-glow), transparent 30%),
+    radial-gradient(circle at left 18%, var(--phase-soft), transparent 26%),
     linear-gradient(180deg, #050d18 0%, #050d18 40%, #030914 100%);
+}
+
+body[data-page="prep"] {
+  --phase-glow: rgba(255, 190, 92, 0.16);
+  --phase-chip-start: #8a3f00;
+  --phase-chip-end: #ffbe5c;
+  --phase-soft: rgba(255, 190, 92, 0.18);
+}
+
+body[data-page="scenario-one"] {
+  --phase-glow: rgba(255, 114, 112, 0.18);
+  --phase-chip-start: #7d1e2f;
+  --phase-chip-end: #ff7270;
+  --phase-soft: rgba(255, 114, 112, 0.18);
+}
+
+body[data-page="scenario-two"] {
+  --phase-glow: rgba(100, 214, 214, 0.18);
+  --phase-chip-start: #036f7b;
+  --phase-chip-end: #64d6d6;
+  --phase-soft: rgba(100, 214, 214, 0.18);
+}
+
+body[data-page="scenario-three"] {
+  --phase-glow: rgba(109, 168, 255, 0.2);
+  --phase-chip-start: #214aa8;
+  --phase-chip-end: #6da8ff;
+  --phase-soft: rgba(109, 168, 255, 0.18);
+}
+
+body[data-page="debrief"] {
+  --phase-glow: rgba(141, 149, 255, 0.18);
+  --phase-chip-start: #4f52c6;
+  --phase-chip-end: #8d95ff;
+  --phase-soft: rgba(141, 149, 255, 0.18);
 }
 
 body::before {
@@ -85,7 +124,7 @@ textarea {
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-xl);
   background:
-    linear-gradient(135deg, rgba(109, 168, 255, 0.12), transparent 30%),
+    linear-gradient(135deg, var(--phase-glow), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
     var(--panel);
   box-shadow: var(--shadow);
@@ -343,6 +382,64 @@ h1 {
   color: var(--ink);
 }
 
+.phase-nav {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.phase-nav-link {
+  display: grid;
+  gap: 8px;
+  min-height: 84px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(221, 234, 252, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 68%),
+    rgba(8, 18, 33, 0.92);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.phase-nav-link.is-current {
+  border-color: var(--phase-chip-end);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%),
+    var(--phase-soft);
+}
+
+.phase-nav-link.is-complete {
+  border-color: rgba(89, 207, 132, 0.4);
+}
+
+.phase-nav-link.is-locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.phase-nav-step {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.phase-nav-label {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.phase-nav-status {
+  color: var(--muted-strong);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
 .control-room {
   margin-top: 22px;
 }
@@ -457,7 +554,7 @@ h1 {
   height: 100%;
   width: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--amber), #ffe29e);
+  background: linear-gradient(90deg, var(--phase-chip-start), var(--phase-chip-end));
   transition: width 220ms ease;
 }
 
@@ -494,7 +591,8 @@ h1 {
   color: var(--ink);
   font-size: 0.72rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #2958d9, #49a8ff);
+  background: linear-gradient(135deg, var(--phase-chip-start), var(--phase-chip-end));
+  box-shadow: 0 12px 24px var(--phase-soft);
 }
 
 .event-counter {
@@ -929,6 +1027,10 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .phase-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .metric-strip,
   .scoreboard {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -951,6 +1053,10 @@ h1 {
   .app-shell {
     width: min(100% - 20px, 1480px);
     padding-top: 18px;
+  }
+
+  .phase-nav {
+    grid-template-columns: 1fr;
   }
 
   .hero,

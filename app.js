@@ -1,3 +1,5 @@
+const STORAGE_KEY = "grey-zone-grid-state-v4";
+
 const BASE_METRICS = {
   stability: 62,
   trust: 55,
@@ -10,36 +12,36 @@ const METRIC_META = {
     label: "System Stability",
     shortLabel: "Stability",
     copy: {
-      high: "Flows are holding, and the grid can absorb shocks without visible disorder.",
-      mid: "The system is still operating, but each new disruption is getting harder to contain.",
-      low: "You are running out of safe operating margin.",
+      high: "The system still has room to absorb shocks without visible disorder.",
+      mid: "Power and gas are still moving, but every new hit hurts more.",
+      low: "Operating margin is dangerously thin.",
     },
   },
   trust: {
     label: "Public Trust",
     shortLabel: "Trust",
     copy: {
-      high: "Citizens and firms still believe the response is fair and credible.",
-      mid: "Support is conditional. One bad call could trigger backlash.",
-      low: "The public is treating resilience asks as failure rather than solidarity.",
+      high: "The country still believes your asks are fair, credible, and worth following.",
+      mid: "Support is conditional. One bad call could flip the mood fast.",
+      low: "People are reading resilience asks as panic or failure.",
     },
   },
   fiscal: {
     label: "Fiscal Headroom",
     shortLabel: "Fiscal",
     copy: {
-      high: "You still have room to protect households without exhausting the Treasury.",
-      mid: "Emergency spending is mounting and policy space is narrowing.",
-      low: "Each extra unit of stability is now painfully expensive.",
+      high: "The Treasury still has options left.",
+      mid: "Emergency support is stacking up and policy space is narrowing.",
+      low: "Every extra hour of calm now costs serious money.",
     },
   },
   clarity: {
     label: "Attribution Clarity",
     shortLabel: "Clarity",
     copy: {
-      high: "You have a credible picture of the threat and how it might spread.",
+      high: "You have a usable picture of the threat and where it might spread next.",
       mid: "You know enough to act, but not enough to relax.",
-      low: "Ambiguity is driving the crisis almost as much as the attack itself.",
+      low: "Ambiguity is now one of the crisis itself.",
     },
   },
 };
@@ -48,54 +50,54 @@ const TOOLS = [
   {
     id: "society",
     title: "Whole-of-Society Resilience",
-    tag: "Recommendation 1",
+    tag: "Tool 1",
     description:
-      "Treat energy as part of national resilience, so public communication and emergency asks land inside a preparedness culture rather than as panic.",
+      "Train the public, institutions, and crisis channels to treat energy shocks as a shared national effort rather than a sudden demand for sacrifice.",
     setupEffects: { trust: 8, clarity: 2 },
     effectSummary: ["+ Trust", "+ Clarity"],
   },
   {
     id: "reserves",
     title: "Strategic Reserves Reset",
-    tag: "Recommendation 2",
+    tag: "Tool 2",
     description:
-      "Strengthen the old insurance layer with gas storage, long-duration electricity storage, and spare hardware for fast replacement.",
+      "Build stronger buffers with gas storage, long-duration power storage, and spare hardware for fast restoration.",
     setupEffects: { stability: 10, fiscal: 2 },
     effectSummary: ["+ Stability", "+ Fiscal"],
   },
   {
     id: "flex",
     title: "Flexibility at Scale",
-    tag: "Recommendation 3",
+    tag: "Tool 3",
     description:
-      "Bring households and businesses into the system through demand flexibility, smart charging, storage, and industrial load shifting.",
+      "Bring homes and businesses into the response through demand shifting, smart charging, and flexible industrial loads.",
     setupEffects: { fiscal: 8, stability: 3 },
     effectSummary: ["+ Fiscal", "+ Stability"],
   },
   {
     id: "renewables",
     title: "Renewables Security Channel",
-    tag: "Recommendation 4",
+    tag: "Tool 4",
     description:
-      "Pull wind and solar operators deeper into shared cyber, escalation, and emergency-response channels rather than leaving them isolated.",
+      "Pull renewable operators into tighter cyber, escalation, and emergency-response channels before the first attack lands.",
     setupEffects: { clarity: 10, stability: 2 },
     effectSummary: ["+ Clarity", "+ Stability"],
   },
   {
     id: "thresholds",
     title: "Lower Reporting Thresholds",
-    tag: "Recommendation 5",
+    tag: "Tool 5",
     description:
-      "Treat distributed assets seriously by lowering thresholds for reporting, telemetry sharing, and coordinated defensive action.",
+      "Treat smaller distributed assets as part of the national picture by lowering the bar for incident reporting and telemetry sharing.",
     setupEffects: { clarity: 8, trust: 1 },
     effectSummary: ["+ Clarity", "+ Trust"],
   },
   {
     id: "northsea",
     title: "North Sea Coalition",
-    tag: "Recommendation 6",
+    tag: "Tool 6",
     description:
-      "Deepen regional collaboration to protect undersea cables, pipelines, and offshore power links in the North Sea.",
+      "Deepen regional protection and shared awareness around pipelines, cables, offshore power links, and undersea interference.",
     setupEffects: { stability: 6, clarity: 6 },
     effectSummary: ["+ Stability", "+ Clarity"],
   },
@@ -104,444 +106,586 @@ const TOOLS = [
 const EVENTS = [
   {
     id: "pipeline-1",
-    phase: "Scenario One",
-    counterLabel: "1 / 6 decisions",
+    phasePage: "scenario-one",
     title: "Explosions at the Sleipner link",
     lead:
-      "It is the coldest January in five years. Russian gas has vanished from the global market, China is absorbing more Qatari LNG, and prices are near 2022 stress levels. Then the UK loses 18% of winter gas supply in an unattributable blast near a North Sea transport pipeline.",
-    signals: ["18% winter gas supply lost", "Cold snap", "Global LNG market strained"],
+      "A brutal cold snap has pushed winter demand across the Northern Hemisphere. Russian gas is gone from the market, LNG desks are already tight, and then a blast tears into a North Sea transport line. The UK instantly loses 18% of winter gas supply.",
+    signals: ["18% gas supply lost", "Cold snap", "LNG market stressed"],
     prompt:
-      "What do you do in the first six hours, before the market panic hardens into a political crisis?",
-    pageNote: "Report spine: scenario summary, pp. 14-16",
+      "The first six hours decide the shape of the panic. How do you move?",
+    intelNote:
+      "National control reports a pressure collapse across the line. Financial desks are already repricing the morning.",
     choices: [
       {
         id: "pipeline-buffer",
         title: "Release buffers and coordinate allies immediately",
         description:
-          "Treat the shock as a whole-system event: lean on storage, open regional coordination channels, and prepare flexibility messaging at the same time.",
+          "Treat it as a whole-system shock: pull on storage, alert regional partners, and prepare public flexibility messaging at once.",
         tags: ["coordination", "supply"],
         effects: { stability: 5, fiscal: -3, trust: 1, clarity: 2 },
         bonuses: [
           {
             tool: "reserves",
             effects: { stability: 4, fiscal: 1 },
-            note: "Strategic reserves buy time before price panic fully lands.",
+            note: "Your reserve layer buys precious time before the market fully bites.",
           },
           {
             tool: "northsea",
             effects: { stability: 2, clarity: 3 },
-            note: "North Sea coordination sharpens the operating picture and reduces delay.",
+            note: "Regional coordination gives you a faster and cleaner operating picture.",
           },
         ],
         result:
-          "You slow the shock and create a credible operating picture, but you have used real resilience capital to do it.",
+          "The shock still lands, but you keep it from turning into blind chaos. The system now has a fighting chance to breathe.",
       },
       {
         id: "pipeline-buy",
         title: "Buy replacement LNG and shield bills",
         description:
-          "Keep normality intact by paying the spot-market price and moving early toward broad household and business protection.",
+          "Pay whatever the market demands, pull in supply, and try to keep the public experience close to normal.",
         tags: ["supply", "cost"],
         effects: { stability: 8, fiscal: -14, trust: 4, clarity: 0 },
         result:
-          "Supply holds for now, but the insurance policy is exactly what the report warns about: pay more, then pay more again.",
+          "Tankers answer the bid and ministers get a little air. The bill, however, lands on your desk immediately.",
       },
       {
         id: "pipeline-hold",
         title: "Wait for firmer attribution before moving hard",
         description:
-          "Avoid escalation and keep public lines narrow until you know whether this was sabotage, failure, or a false signal.",
+          "Keep the public line tight until you know whether this was sabotage, technical failure, or a false signal dressed as one.",
         tags: ["attribution"],
         effects: { stability: -8, fiscal: 2, trust: -4, clarity: 8 },
         bonuses: [
           {
             tool: "thresholds",
             effects: { clarity: 2 },
-            note: "Stronger telemetry and reporting make delay less blind than it would otherwise be.",
+            note: "Better reporting makes the delay less blind than it would otherwise be.",
           },
         ],
         result:
-          "You reduce the risk of saying the wrong thing too early, but hesitation amplifies market stress and public unease.",
+          "You avoid saying the wrong thing too early, but hesitation feeds both market stress and public anxiety.",
       },
     ],
   },
   {
     id: "pipeline-2",
-    phase: "Scenario One",
-    counterLabel: "2 / 6 decisions",
+    phasePage: "scenario-one",
     title: "The public line",
     lead:
-      "The system is still standing, but the price signal is brutal and ministers want a public posture. The core dilemma from the report is now visible: do you treat citizens as participants in resilience, or as people who must be kept unaware while the Treasury absorbs the pain?",
+      "The line is still down. Prices are biting. Newsrooms want a number, ministers want a message, and the country can feel the strain even before anyone says a word.",
     signals: ["Price spike", "Media pressure", "Grey-zone ambiguity"],
     prompt:
-      "Which signal do you send to the country and the market?",
-    pageNote: "Report spine: cost, demand, and public resilience, pp. 19-20",
+      "What signal do you send to the country?",
+    intelNote:
+      "Cabinet wants a line for the morning bulletins. Markets are looking for either confidence or signs of panic.",
     choices: [
       {
         id: "pipeline-public-flex",
-        title: "Openly ask for flexibility and explain the threat",
+        title: "Ask openly for flexibility and explain the strain",
         description:
-          "Issue a national flexibility appeal, explain the pressure on gas, and treat households and firms as actors in the response rather than spectators.",
+          "Tell the country what is happening, ask homes and firms to shift demand, and frame cooperation as part of the response.",
         tags: ["demand", "public", "coordination"],
         effects: { stability: 4, fiscal: 6, trust: -1, clarity: 2 },
         bonuses: [
           {
             tool: "society",
             effects: { trust: 6 },
-            note: "Whole-of-society preparation means the appeal feels like shared resilience, not improvised rationing.",
+            note: "Because people were prepared early, the ask feels disciplined rather than desperate.",
           },
           {
             tool: "flex",
             effects: { stability: 3, fiscal: 2 },
-            note: "A live flexibility market turns public cooperation into measurable system relief.",
+            note: "Flexible loads turn public cooperation into real relief on the system.",
           },
         ],
         result:
-          "You accept that resilience is behavioural as well as technical. If people are prepared, this is a powerful release valve.",
+          "The country sees the strain, but it also sees a plan. If trust holds, demand starts moving before the market alone can do the job.",
       },
       {
         id: "pipeline-silent-support",
-        title: "Subsidise broadly and avoid asking for behaviour change",
+        title: "Shield broadly and avoid asking for behaviour change",
         description:
-          "Preserve the feel of business as usual and buy stability with visible support rather than visible sacrifice.",
+          "Spend hard, soften the immediate pain, and keep the public experience looking as close to normal as possible.",
         tags: ["supply", "cost"],
         effects: { stability: 2, fiscal: -12, trust: 3, clarity: -2 },
         result:
-          "You mute the politics now, but deepen the expensive-stability trap the report says is no longer sustainable.",
+          "You buy quiet for now. The grid stays calmer, but the Treasury takes the hit and the country learns very little about living through strain.",
       },
       {
         id: "pipeline-accuse",
         title: "Publicly accuse Russia before the picture is complete",
         description:
-          "Frame the blast as hostile action, harden the message, and try to deter further grey-zone probing with visible resolve.",
+          "Go hard and early, betting that visible resolve will deter more probing even before the forensic picture is clean.",
         tags: ["attribution", "coordination"],
         effects: { stability: -2, fiscal: -1, trust: 0, clarity: -8 },
         bonuses: [
           {
             tool: "northsea",
             effects: { clarity: 3, trust: 2 },
-            note: "Shared monitoring data gives the accusation more grounding than it would otherwise have.",
+            note: "Shared monitoring data gives the accusation more footing than it would otherwise have.",
           },
         ],
         result:
-          "Resolve without evidence carries its own strategic cost. You may stiffen posture, but ambiguity can punish overconfidence.",
+          "Resolve stiffens the posture, but if the evidence lags behind the rhetoric, you may have traded confidence for noise.",
       },
     ],
   },
   {
     id: "wind-1",
-    phase: "Scenario Two",
-    counterLabel: "3 / 6 decisions",
+    phasePage: "scenario-two",
     title: "A wind farm goes dark",
     lead:
-      "A control room loses contact with all 174 turbines at a major offshore wind farm. Operators shut the site to protect hardware, pulling 1.2 GW off the system. Forensics later point toward a compromised software update from the turbine manufacturer.",
-    signals: ["174 turbines offline", "1.2 GW lost", "Cyber cause unclear"],
+      "A major offshore wind farm loses contact with all 174 turbines. Operators shut the site to protect hardware, cutting 1.2 GW from the system. Initial signs point to a poisoned software update from the turbine manufacturer.",
+    signals: ["174 turbines offline", "1.2 GW lost", "Software compromise suspected"],
     prompt:
-      "How do you handle a distributed-asset cyber event that is serious, but not yet system-wide?",
-    pageNote: "Report spine: wind-farm scenario and distributed resilience, pp. 14, 18",
+      "This is not yet a system-wide emergency. Do you keep it contained or act as if contagion is already possible?",
+    intelNote:
+      "The operator can keep the shutdown orderly. What nobody knows yet is whether the same path exists elsewhere in the fleet.",
     choices: [
       {
         id: "wind-isolate-share",
-        title: "Isolate, ground the software, and force log sharing",
+        title: "Isolate the software path and force telemetry sharing",
         description:
-          "Take the immediate generation hit, freeze the compromised update path, and make operators share telemetry quickly.",
+          "Freeze the update path, take the generation hit, and demand fast log sharing across operators and suppliers.",
         tags: ["cyber", "coordination"],
         effects: { stability: -2, fiscal: 0, trust: 1, clarity: 8 },
         bonuses: [
           {
             tool: "renewables",
             effects: { stability: 2, clarity: 4 },
-            note: "Existing renewable security channels make shared response far faster and less improvised.",
+            note: "Your renewable security channels mean the response starts joined-up instead of improvised.",
           },
           {
             tool: "thresholds",
             effects: { clarity: 3 },
-            note: "Lower thresholds surface copycat signals across smaller assets sooner.",
+            note: "Smaller sites begin surfacing copycat signals quickly instead of staying invisible.",
           },
         ],
         result:
-          "You sacrifice short-term output to build a real picture of the threat. That picture may matter more than the first lost megawatt.",
+          "You give up megawatts to buy visibility. It is a painful trade, but the network stops being blind.",
       },
       {
         id: "wind-quiet-fix",
         title: "Keep it operator-led and quiet while the grid compensates",
         description:
-          "Because the system can survive one site loss, let the operator work the problem and avoid turning a contained incident into a national story.",
+          "Because the wider system can absorb one site loss, let the operator handle it and keep the incident contained for as long as possible.",
         tags: ["supply"],
         effects: { stability: 4, fiscal: 0, trust: -4, clarity: -8 },
         result:
-          "The grid stays smoother in the moment, but you learn less and leave room for contagion elsewhere.",
+          "The grid stays smoother in the moment, but the rest of the fleet learns very little and the blind spots remain exactly where they were.",
       },
       {
         id: "wind-fleet-audit",
         title: "Order precautionary audits across offshore fleets",
         description:
-          "Assume a wider compromise path may exist and accept controlled generation losses now to reduce the probability of a bigger coordinated hit later.",
+          "Assume the compromise path may be wider than one site and accept controlled losses now to reduce the chance of a much larger hit later.",
         tags: ["cyber", "storage"],
         effects: { stability: -5, fiscal: -2, trust: 2, clarity: 6 },
         bonuses: [
           {
             tool: "reserves",
             effects: { stability: 2 },
-            note: "Extra reserve capacity makes the preventive derating easier to absorb.",
+            note: "Reserve capacity gives you enough room to be cautious without losing control.",
           },
           {
             tool: "flex",
             effects: { stability: 2, fiscal: 1 },
-            note: "Demand flexibility offsets the operational cost of caution.",
+            note: "Flexible demand softens the operational cost of caution.",
           },
         ],
         result:
-          "You treat a single compromised update as a warning shot instead of a one-off inconvenience.",
+          "You take the hit early and on your own terms, rather than waiting to see how many sites fail at once.",
       },
     ],
   },
   {
     id: "wind-2",
-    phase: "Scenario Two",
-    counterLabel: "4 / 6 decisions",
+    phasePage: "scenario-two",
     title: "Copycat risk across smaller assets",
     lead:
-      "Forensics suggest the same approach could be used against many smaller wind and solar sites at once. The report warns that renewables are physically resilient, but that distributed cyber risk can still accumulate into a dangerous critical mass.",
-    signals: ["Distributed contagion risk", "Board-level visibility gap", "Procedures still immature"],
+      "Forensics now suggest the same route could reach smaller wind and solar sites. One outage is manageable. Thirty at once would be something else entirely.",
+    signals: ["Distributed contagion risk", "Board visibility gap", "Procedures still uneven"],
     prompt:
-      "What structural change do you make while the threat is still visible?",
-    pageNote: "Report spine: distributed threat vectors and reporting gaps, pp. 18-19",
+      "What structural move do you make while the threat is still visible?",
+    intelNote:
+      "Several operators are calling this a one-off. Cyber teams are less sure.",
     choices: [
       {
         id: "wind-common-channel",
         title: "Lower thresholds and create a common incident channel",
         description:
-          "Pull smaller renewable operators into shared reporting, escalation, and defensive coordination instead of reserving that machinery for the largest sites only.",
+          "Pull smaller renewable operators into a shared reporting and response channel before the threat can fan out across them.",
         tags: ["cyber", "coordination"],
         effects: { stability: 4, fiscal: -1, trust: 1, clarity: 6 },
         bonuses: [
           {
             tool: "thresholds",
             effects: { stability: 2, clarity: 4 },
-            note: "Because the threshold change already exists, scaling the channel is fast and credible.",
+            note: "Because thresholds were already lower, the channel fills with usable signals immediately.",
           },
           {
             tool: "renewables",
             effects: { clarity: 2 },
-            note: "Renewable operators already know where to send alerts and what good practice looks like.",
+            note: "Operators already know where to send alerts and what a good escalation looks like.",
           },
         ],
         result:
-          "You turn a fragmented cyber landscape into something the state can actually see and shape.",
+          "Fragmented operators start behaving more like a single defended system. That alone changes the tempo of the threat.",
       },
       {
         id: "wind-prioritise-largest",
-        title: "Focus security resources only on the largest assets",
+        title: "Protect only the biggest sites",
         description:
-          "Keep the national effort concentrated on the sites most likely to matter in megawatt terms and assume smaller operators can manage themselves.",
+          "Concentrate scarce cyber effort on the assets with the biggest immediate megawatt consequences and let smaller operators fend for themselves.",
         tags: ["cyber", "cost"],
         effects: { stability: -5, fiscal: 2, trust: -1, clarity: -4 },
         result:
-          "This saves money now, but reproduces the blind spot the report says distributed threats are creating.",
+          "You save money and keep the effort focused, but the seams between operators stay wide open.",
       },
       {
         id: "wind-storage-flex",
         title: "Accelerate storage and flexibility dispatch",
         description:
-          "Use the incident as a trigger to make the system less brittle overall, so variable generation shocks have more cushions than gas or curtailment.",
+          "Use the incident as a trigger to give the system more cushions, so variable generation losses do not always push pressure back onto gas.",
         tags: ["demand", "storage"],
         effects: { stability: 6, fiscal: 4, trust: 3, clarity: 1 },
         bonuses: [
           {
             tool: "reserves",
             effects: { stability: 4 },
-            note: "Long-duration reserves turn the philosophy of resilience into real operating headroom.",
+            note: "Your insurance layer turns resilience from a slogan into real operating room.",
           },
           {
             tool: "flex",
             effects: { stability: 2, fiscal: 3 },
-            note: "Participation from homes and businesses turns flexibility into a serious strategic tool.",
+            note: "Demand-side participation turns spare headroom into something you can actually dispatch.",
           },
         ],
         result:
-          "You respond to cyber uncertainty by giving the system more room to bend instead of asking gas to carry the entire burden.",
+          "Instead of trying to make every turbine invulnerable, you make the wider system harder to corner.",
       },
     ],
   },
   {
     id: "terminal-1",
-    phase: "Scenario Three",
-    counterLabel: "5 / 6 decisions",
+    phasePage: "scenario-three",
     title: "Malware at a gas terminal",
     lead:
-      "Malware is found in a peripheral system attached to a major gas terminal's master control unit. Pipelines fall into a no-flow state while engineers assess whether safety protocols were compromised. The site handles roughly a quarter of UK gas imports.",
-    signals: ["Quarter of UK gas imports at risk", "No-flow state", "SCADA compromise suspected"],
+      "Malware is found in a peripheral system tied to a major gas terminal's master control unit. The site drops into a no-flow state while engineers decide whether the safety layer has been touched. Roughly a quarter of UK gas imports now hang in the balance.",
+    signals: ["Quarter of gas imports at risk", "No-flow state", "SCADA compromise suspected"],
     prompt:
-      "Do you prioritise speed, certainty, or a hybrid restart path?",
-    pageNote: "Report spine: gas-terminal scenario and known procedures, pp. 14, 17-18",
+      "Do you move fast, move carefully, or split the difference?",
+    intelNote:
+      "Terminal engineers can clear sections of the site, but nobody wants to be the person who restarts into a poisoned system.",
     choices: [
       {
         id: "terminal-hold",
         title: "Hold the shutdown and shift demand instead",
         description:
-          "Keep the site dark until forensics clear safety systems, reroute what you can, and lean harder on industrial demand response.",
+          "Keep the site dark until the safety picture is clean, reroute what you can, and lean on demand response to buy time.",
         tags: ["cyber", "demand", "coordination"],
         effects: { stability: -3, fiscal: 5, trust: 2, clarity: 8 },
         bonuses: [
           {
             tool: "flex",
             effects: { stability: 4, trust: 1 },
-            note: "Demand-side participation turns a painful hold into a manageable one.",
+            note: "Demand-side participation turns a hard hold into a manageable one.",
           },
           {
             tool: "reserves",
             effects: { stability: 3 },
-            note: "Stored energy buys the forensic team time they would not otherwise have.",
+            note: "Stored energy buys the forensic team the hours it needs.",
           },
           {
             tool: "society",
             effects: { trust: 1 },
-            note: "Public resilience framing reduces the political cost of asking the system to bend.",
+            note: "A prepared public is less likely to read restraint as drift.",
           },
         ],
         result:
-          "You privilege certainty over speed, accepting near-term strain to avoid a larger safety and credibility failure later.",
+          "You choose certainty over speed. It hurts in the moment, but it avoids turning one emergency into two.",
       },
       {
         id: "terminal-fast-restart",
         title: "Push for a fast restart under pressure",
         description:
-          "Minimise the immediate supply hit and assume the attack was narrow enough to manage while the terminal comes back online.",
+          "Minimise the immediate supply hit and bet that the compromise was narrow enough to manage while bringing the terminal back online.",
         tags: ["supply"],
         effects: { stability: 7, fiscal: -2, trust: -6, clarity: -10 },
         result:
-          "The system breathes easier immediately, but you are betting national credibility on incomplete forensic confidence.",
+          "The system breathes easier immediately, but everyone in the room knows you just wagered national confidence on incomplete certainty.",
       },
       {
         id: "terminal-segment",
         title: "Segment the terminal and restore partial flow",
         description:
-          "Split the difference: isolate the affected architecture, restore partial capacity where you can, and pull in a broad cyber team.",
+          "Carve away the suspect architecture, restore what you can safely restore, and flood the site with cyber and engineering support.",
         tags: ["cyber", "coordination"],
         effects: { stability: 4, fiscal: -2, trust: 1, clarity: 6 },
         bonuses: [
           {
             tool: "renewables",
             effects: { clarity: 1 },
-            note: "Cross-operator cyber habits make coordinated response less improvised.",
+            note: "Cross-sector cyber habits make joint response faster and less clumsy.",
           },
         ],
         result:
-          "You neither panic nor gamble. The partial restart is slower than ministers want, but easier to defend.",
+          "You neither freeze nor gamble. The partial restart is slower than ministers want, but it is far easier to defend.",
       },
     ],
   },
   {
     id: "terminal-2",
-    phase: "Scenario Three",
-    counterLabel: "6 / 6 decisions",
+    phasePage: "scenario-three",
     title: "The rest of winter",
     lead:
-      "The crisis is now strategic rather than merely operational. Prices remain painful, the public is watching, and the report's core warning is live in front of you: if gas remains the default shock absorber, the UK can survive and still lose.",
-    signals: ["Gas still setting the system's mood", "Public patience thinning", "Treasury under strain"],
+      "By now the crisis is strategic, not just operational. Prices are still painful, patience is thinning, and every actor in the system can feel how much of the burden still falls on gas.",
+    signals: ["Public patience thinning", "Treasury under strain", "Gas still setting the mood"],
     prompt:
-      "What package defines the rest of your winter response?",
-    pageNote: "Report spine: concluding argument and recommendations, pp. 21-26",
+      "What doctrine carries you through the rest of winter?",
+    intelNote:
+      "This is the part everyone remembers later: not whether the first response was neat, but what pattern of response followed it.",
     choices: [
       {
         id: "winter-buy-normality",
         title: "Buy normality at almost any cost",
         description:
-          "Prioritise supply assurance, broad bill shielding, and visible continuity even if that means taking the full fiscal hit.",
+          "Protect continuity first, spend hard to suppress the pain, and keep asking the market to carry the system through.",
         tags: ["supply", "cost"],
         effects: { stability: 5, fiscal: -14, trust: 1, clarity: 0 },
         result:
-          "You keep the lights on, but the report would treat this as a fragile victory: stability purchased through deeper exposure to coercive price shocks.",
+          "The country sees continuity. Underneath it, the tab keeps climbing and the same pressure points remain ready for the next shock.",
       },
       {
         id: "winter-resilience-model",
         title: "Move to an explicit resilience model",
         description:
-          "Use targeted support, open briefings, and flexibility payments so the system leans on participation instead of spot gas alone.",
+          "Use targeted support, open briefings, and paid flexibility so the system leans on participation instead of panic-priced fuel alone.",
         tags: ["demand", "public", "coordination"],
         effects: { stability: 5, fiscal: 6, trust: 6, clarity: 4 },
         bonuses: [
           {
             tool: "society",
             effects: { trust: 4 },
-            note: "Whole-of-society framing makes the shift politically legible.",
+            note: "The public reads the shift as disciplined national effort rather than last-minute improvisation.",
           },
           {
             tool: "flex",
             effects: { stability: 2, fiscal: 4 },
-            note: "A real flexibility system means the rhetoric is backed by dispatchable demand reduction.",
+            note: "Flexible demand finally becomes a strategic tool, not a side programme.",
           },
         ],
         result:
-          "You choose the report's preferred direction: reduce coercive leverage by shrinking the role of panic-priced gas in the response.",
+          "The country has to feel the strain, but it feels it inside a plan. That changes both the politics and the economics of the winter.",
       },
       {
         id: "winter-insurance-layer",
         title: "Rebuild the insurance layer for the next shock",
         description:
-          "Invest hard in gas storage, long-duration energy storage, spare hardware, and North Sea coordination so the next winter starts from a stronger base.",
+          "Invest hard in reserves, storage, spare hardware, and regional protection so the next winter starts from a stronger base.",
         tags: ["storage", "coordination"],
         effects: { stability: 7, fiscal: 2, trust: 2, clarity: 3 },
         bonuses: [
           {
             tool: "reserves",
             effects: { stability: 4, fiscal: 2 },
-            note: "Because reserves were already part of your posture, this scales up quickly instead of starting from scratch.",
+            note: "Because buffers were already part of the posture, scaling them up happens faster.",
           },
           {
             tool: "northsea",
             effects: { clarity: 2 },
-            note: "Regional coordination makes physical protection more than a slogan.",
+            note: "Regional protection becomes a real operating layer instead of a diplomatic aspiration.",
           },
         ],
         result:
-          "You act on the report's central synthesis: combine legacy strengths with new tools instead of staging a false choice between them.",
+          "You spend to become harder to corner next time, not just to survive this week.",
       },
     ],
   },
 ];
 
-const SOURCE_ITEMS = [
-  {
-    title: "Scenario frame",
-    detail:
-      "Cold January, tight LNG market, and three winter attacks drawn from the report's wargame setup.",
-    pages: "pp. 14-16",
+const PAGE_CONFIG = {
+  prep: {
+    label: "Preparation",
+    step: "Page 1",
+    path: "index.html",
+    heroEyebrow: "Preparation",
+    heroTitle: "Set your winter doctrine",
+    heroDek:
+      "The crisis has not started yet. You have funding, political space, and time to activate only two resilience tools before winter turns violent.",
+    contextLabel: "Before the shock",
+    contextItems: [
+      "Coldest January in five years",
+      "Global LNG markets already strained",
+      "Only two strategic tools can be activated",
+    ],
+    statCards: [
+      { label: "Mission", value: "Pick two tools before the first strike lands" },
+      { label: "Threat style", value: "Grey-zone pressure, sabotage, and cyber intrusion" },
+      { label: "Win condition", value: "Keep the system alive without burning trust or money" },
+    ],
+    sources: [
+      {
+        title: "Exercise frame",
+        detail:
+          "Winter demand is already high before the first hostile move arrives. You are not entering a calm system.",
+      },
+      {
+        title: "Resilience toolkit",
+        detail:
+          "Six tools are available: public readiness, reserves, flexibility, renewable security channels, lower reporting thresholds, and North Sea coordination.",
+      },
+    ],
   },
-  {
-    title: "Pipeline lesson",
-    detail:
-      "Legacy gas assets are vulnerable, but they benefit from mature emergency procedures and clearer chains of command.",
-    pages: "pp. 17-18",
+  "scenario-one": {
+    label: "Scenario One",
+    step: "Page 2",
+    path: "scenario-one.html",
+    eventRange: [0, 1],
+    heroEyebrow: "Scenario One",
+    heroTitle: "North Sea gas-pipeline sabotage",
+    heroDek:
+      "A transport line is hit in the middle of a winter market squeeze. You are now managing both a physical outage and the fear that more is coming.",
+    contextLabel: "Pipeline phase",
+    contextItems: [
+      "Explosions near Sleipner infrastructure",
+      "18% of winter gas supply disappears",
+      "Prices jump before attribution is clear",
+    ],
+    statCards: [
+      { label: "Primary problem", value: "Physical shock to a central gas artery" },
+      { label: "Immediate risk", value: "Market panic outruns operational control" },
+      { label: "Your job", value: "Stabilise the system before panic becomes policy" },
+    ],
+    sources: [
+      {
+        title: "Operational note",
+        detail:
+          "Legacy gas infrastructure is vulnerable because so much of the flow passes through a few high-value assets.",
+      },
+      {
+        title: "Command note",
+        detail:
+          "Known gas crises come with mature escalation chains. The challenge is speed, cost, and public handling under pressure.",
+      },
+    ],
   },
-  {
-    title: "Renewables lesson",
-    detail:
-      "Distributed renewables are harder to break physically, but cyber and coordination gaps can still compound into systemic risk.",
-    pages: "pp. 18-19",
+  "scenario-two": {
+    label: "Scenario Two",
+    step: "Page 3",
+    path: "scenario-two.html",
+    eventRange: [2, 3],
+    heroEyebrow: "Scenario Two",
+    heroTitle: "A cyber strike through the renewable fleet",
+    heroDek:
+      "One wind farm can be absorbed. A wider compromise across many distributed assets could become something very different. This phase is about visibility, contagion, and coordination.",
+    contextLabel: "Renewables phase",
+    contextItems: [
+      "174 turbines lose contact with control",
+      "Compromised update path under investigation",
+      "Small sites may be the real danger next",
+    ],
+    statCards: [
+      { label: "Primary problem", value: "Cyber ambiguity inside a distributed system" },
+      { label: "Immediate risk", value: "Local incidents stacking into critical mass" },
+      { label: "Your job", value: "See more of the system before it fragments" },
+    ],
+    sources: [
+      {
+        title: "Operational note",
+        detail:
+          "Distributed renewables are harder to cripple physically, but weak cyber coordination can still create systemic danger.",
+      },
+      {
+        title: "Command note",
+        detail:
+          "Smaller operators and working-level cyber incidents are often the pieces that never reach the national picture in time.",
+      },
+    ],
   },
-  {
-    title: "Demand and cost lesson",
-    detail:
-      "Crisis response often over-relies on keeping supply flowing while underusing flexibility, public participation, and cost-aware demand tools.",
-    pages: "pp. 19-20",
+  "scenario-three": {
+    label: "Scenario Three",
+    step: "Page 4",
+    path: "scenario-three.html",
+    eventRange: [4, 5],
+    heroEyebrow: "Scenario Three",
+    heroTitle: "Gas terminal malware and the long winter",
+    heroDek:
+      "A terminal drops into a no-flow state. The immediate decision is technical. The real question is what kind of country-wide response you build after that.",
+    contextLabel: "Terminal phase",
+    contextItems: [
+      "Major gas terminal in no-flow state",
+      "Quarter of UK gas imports at risk",
+      "Winter doctrine now matters more than a single fix",
+    ],
+    statCards: [
+      { label: "Primary problem", value: "Cyber safety risk inside critical gas infrastructure" },
+      { label: "Immediate risk", value: "Short-term supply pressure hardening into long-term fragility" },
+      { label: "Your job", value: "Choose what carries the country through the rest of winter" },
+    ],
+    sources: [
+      {
+        title: "Operational note",
+        detail:
+          "Gas terminals and pipelines remain central enough that one well-placed hit can still carry national consequences.",
+      },
+      {
+        title: "Command note",
+        detail:
+          "When gas keeps setting the tempo, every choice starts to bleed into cost, politics, and trust.",
+      },
+    ],
   },
-  {
-    title: "Conclusion",
-    detail:
-      "The report argues for combining storage, flexibility, shared security channels, and regional coordination to reduce gas-driven coercion.",
-    pages: "pp. 21-26",
+  debrief: {
+    label: "Debrief",
+    step: "Page 5",
+    path: "debrief.html",
+    heroEyebrow: "Debrief",
+    heroTitle: "What kind of winter did you build?",
+    heroDek:
+      "The screens cool down, the shouting stops, and the deeper question arrives: did your choices make the country harder to coerce, or did they only keep it moving a little longer?",
+    contextLabel: "After the exercise",
+    contextItems: [
+      "Six decisions are now on the record",
+      "Every score is out of 100",
+      "The aggregate resilience score is out of 400",
+    ],
+    statCards: [
+      { label: "Readout", value: "Review the doctrine your decisions produced" },
+      { label: "Question", value: "Did you buy time, or build resilience?" },
+      { label: "Next move", value: "Reset and rerun with a different posture if needed" },
+    ],
+    sources: [
+      {
+        title: "After-action note",
+        detail:
+          "The board is cold now. What matters is the posture you revealed under stress: where you bought time, where you shared strain, and where you stayed easy to pressure.",
+      },
+      {
+        title: "Archive access",
+        detail:
+          "The external research dossier sits outside the simulation. Open it if you want the real-world material that inspired the scenario design.",
+      },
+    ],
   },
-];
+};
 
+const PAGE_ORDER = ["prep", "scenario-one", "scenario-two", "scenario-three", "debrief"];
 const TOOL_MAP = new Map(TOOLS.map((tool) => [tool.id, tool]));
-const MAX_TOOL_SELECTION = 2;
 
-const state = createInitialState();
+const pageId = document.body.dataset.page || "prep";
+const page = PAGE_CONFIG[pageId] || PAGE_CONFIG.prep;
+let state = loadState();
 
 const elements = {
-  jumpToGame: document.getElementById("jumpToGame"),
+  pageEyebrow: document.getElementById("pageEyebrow"),
+  pageHeading: document.getElementById("pageHeading"),
+  pageDek: document.getElementById("pageDek"),
+  heroActions: document.getElementById("heroActions"),
+  pageContextLabel: document.getElementById("pageContextLabel"),
+  pageContextList: document.getElementById("pageContextList"),
+  pageStatGrid: document.getElementById("pageStatGrid"),
+  phaseNav: document.getElementById("phaseNav"),
   phaseChip: document.getElementById("phaseChip"),
   eventCounter: document.getElementById("eventCounter"),
   stageTitle: document.getElementById("stageTitle"),
@@ -578,26 +722,22 @@ const elements = {
   },
 };
 
-elements.jumpToGame.addEventListener("click", () => {
-  document.getElementById("game").scrollIntoView({ behavior: "smooth", block: "start" });
-});
-
-elements.stageBody.addEventListener("click", handleStageClick);
+document.addEventListener("click", handleActionClick);
 
 render();
 
-function createInitialState() {
+function createDefaultState() {
   return {
-    screen: "prep",
+    gameStarted: false,
     selectedTools: [],
     metrics: cloneMetrics(BASE_METRICS),
     currentEventIndex: 0,
     pendingResolution: null,
     log: [
       {
-        tag: "Briefing",
-        title: "Exercise loaded",
-        copy: "Choose two tools from the report before the winter crisis starts.",
+        tag: "Boot",
+        title: "Control room online",
+        copy: "Pick two tools on the preparation page before winter starts moving against you.",
       },
     ],
     history: [],
@@ -614,11 +754,97 @@ function createInitialState() {
   };
 }
 
+function loadState() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return createDefaultState();
+    }
+
+    return ensureStateShape(JSON.parse(raw));
+  } catch (_error) {
+    return createDefaultState();
+  }
+}
+
+function saveState() {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (_error) {
+    // Ignore storage failures in static mode.
+  }
+}
+
+function ensureStateShape(raw) {
+  const defaults = createDefaultState();
+  return {
+    ...defaults,
+    ...raw,
+    metrics: {
+      ...defaults.metrics,
+      ...(raw.metrics || {}),
+    },
+    patterns: {
+      ...defaults.patterns,
+      ...(raw.patterns || {}),
+    },
+    selectedTools: Array.isArray(raw.selectedTools) ? raw.selectedTools.filter((id) => TOOL_MAP.has(id)) : [],
+    log: Array.isArray(raw.log) && raw.log.length ? raw.log : defaults.log,
+    history: Array.isArray(raw.history) ? raw.history : [],
+  };
+}
+
 function cloneMetrics(source) {
   return Object.fromEntries(Object.entries(source).map(([key, value]) => [key, value]));
 }
 
+function handleActionClick(event) {
+  const target = event.target.closest("[data-action]");
+  if (!target) return;
+
+  const action = target.getAttribute("data-action");
+  if (target.getAttribute("aria-disabled") === "true") return;
+
+  if (action === "jump-to-game") {
+    document.getElementById("game").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  if (action === "toggle-tool") {
+    toggleTool(target.getAttribute("data-tool-id"));
+    return;
+  }
+
+  if (action === "clear-tools") {
+    state.selectedTools = [];
+    saveState();
+    render();
+    return;
+  }
+
+  if (action === "start-game") {
+    startGame();
+    return;
+  }
+
+  if (action === "reset-game") {
+    resetGame();
+    return;
+  }
+
+  if (action === "choose-option") {
+    resolveChoice(target.getAttribute("data-choice-id"));
+    return;
+  }
+
+  if (action === "continue") {
+    continueFromResult();
+  }
+}
+
 function render() {
+  renderHero();
+  renderPhaseNav();
   renderMetrics();
   renderProgress();
   renderToolSummary();
@@ -627,48 +853,147 @@ function render() {
   renderStage();
 }
 
+function renderHero() {
+  elements.pageEyebrow.textContent = page.heroEyebrow;
+  elements.pageHeading.textContent = page.heroTitle;
+  elements.pageDek.textContent = page.heroDek;
+  elements.pageContextLabel.textContent = page.contextLabel;
+  elements.pageContextList.innerHTML = page.contextItems.map((item) => `<li>${item}</li>`).join("");
+  elements.pageStatGrid.innerHTML = page.statCards
+    .map(
+      (card) => `
+        <article class="hero-stat">
+          <span class="mini-label">${card.label}</span>
+          <strong>${card.value}</strong>
+        </article>
+      `,
+    )
+    .join("");
+  elements.heroActions.innerHTML = getHeroActions();
+}
+
+function getHeroActions() {
+  const actions = [];
+
+  if (pageId === "prep" && state.gameStarted && state.currentEventIndex < EVENTS.length) {
+    actions.push(
+      `<a class="primary-button" href="${PAGE_CONFIG[getCurrentPlayablePageId()].path}">Resume Current Run</a>`,
+    );
+    actions.push('<button class="secondary-button" type="button" data-action="reset-game">Start Fresh</button>');
+  } else if (pageId === "debrief") {
+    actions.push('<button class="primary-button" type="button" data-action="reset-game">Run Another Winter</button>');
+  } else if (pageId === "prep") {
+    actions.push('<button class="primary-button" type="button" data-action="jump-to-game">Configure Posture</button>');
+  } else {
+    actions.push(`<a class="secondary-link" href="${PAGE_CONFIG.prep.path}">Open Preparation</a>`);
+    actions.push('<button class="ghost-button" type="button" data-action="reset-game">Reset Exercise</button>');
+  }
+
+  actions.push(
+    '<a class="secondary-link" href="https://www.renewableuk.com/media/pqobbk3c/new-threats-and-new-tools-reinventing-energy-security-for-an-era-of-instability.pdf" target="_blank" rel="noreferrer">Open External Dossier</a>',
+  );
+
+  return actions.join("");
+}
+
+function renderPhaseNav() {
+  elements.phaseNav.innerHTML = PAGE_ORDER.map((id, index) => renderPhaseNavItem(id, index)).join("");
+}
+
+function renderPhaseNavItem(id, index) {
+  const config = PAGE_CONFIG[id];
+  const isCurrent = id === pageId;
+  const unlocked = isPhaseUnlocked(id);
+  const completed = isPhaseCompleted(id);
+  const status = isCurrent ? "Current" : completed ? "Complete" : unlocked ? "Open" : "Locked";
+  const className = `phase-nav-link${isCurrent ? " is-current" : ""}${completed ? " is-complete" : ""}${
+    unlocked ? "" : " is-locked"
+  }`;
+
+  if (!unlocked) {
+    return `
+      <span class="${className}" aria-disabled="true">
+        <span class="phase-nav-step">${config.step}</span>
+        <span class="phase-nav-label">${config.label}</span>
+        <span class="phase-nav-status">${status}</span>
+      </span>
+    `;
+  }
+
+  return `
+    <a class="${className}" href="${config.path}">
+      <span class="phase-nav-step">${config.step}</span>
+      <span class="phase-nav-label">${config.label}</span>
+      <span class="phase-nav-status">${status}</span>
+    </a>
+  `;
+}
+
+function isPhaseUnlocked(id) {
+  if (id === "prep") return true;
+  if (!state.gameStarted) return false;
+  if (id === "scenario-one") return true;
+  if (id === "scenario-two") return state.currentEventIndex >= 2;
+  if (id === "scenario-three") return state.currentEventIndex >= 4;
+  if (id === "debrief") return state.currentEventIndex >= EVENTS.length;
+  return false;
+}
+
+function isPhaseCompleted(id) {
+  if (!state.gameStarted) return false;
+  if (id === "prep") return state.gameStarted;
+  if (id === "scenario-one") return state.currentEventIndex >= 2;
+  if (id === "scenario-two") return state.currentEventIndex >= 4;
+  if (id === "scenario-three") return state.currentEventIndex >= EVENTS.length;
+  if (id === "debrief") return state.currentEventIndex >= EVENTS.length;
+  return false;
+}
+
 function renderMetrics() {
-  Object.entries(METRIC_META).forEach(([key, meta]) => {
-    const value = state.metrics[key];
-    const nodes = elements.metrics[key];
+  Object.keys(METRIC_META).forEach((metric) => {
+    const value = state.metrics[metric];
+    const nodes = elements.metrics[metric];
     nodes.value.textContent = `${Math.round(value)}`;
     nodes.fill.style.width = `${value}%`;
-    nodes.copy.textContent = getMetricCopy(key, value);
+    nodes.copy.textContent = getMetricCopy(metric, value);
   });
 }
 
-function getMetricCopy(metricKey, value) {
-  const copy = METRIC_META[metricKey].copy;
+function getMetricCopy(metric, value) {
+  const copy = METRIC_META[metric].copy;
   if (value >= 70) return copy.high;
   if (value >= 40) return copy.mid;
   return copy.low;
 }
 
 function renderProgress() {
-  let completed = 0;
-  let label = "Choose two tools to prepare for winter.";
+  const completed = state.gameStarted
+    ? Math.min(state.currentEventIndex + (state.pendingResolution ? 1 : 0), EVENTS.length)
+    : 0;
 
-  if (state.screen === "decision") {
-    completed = state.currentEventIndex;
-    label = `Live scenario: ${EVENTS[state.currentEventIndex].title}`;
-  } else if (state.screen === "result") {
-    completed = state.currentEventIndex + 1;
-    label = `Outcome logged: ${state.pendingResolution.choiceTitle}`;
-  } else if (state.screen === "debrief") {
-    completed = EVENTS.length;
-    label = "Exercise complete. Review your doctrine and weak points.";
+  let text = "Choose two tools and lock your posture before the first move lands.";
+
+  if (pageId === "prep" && state.gameStarted && state.currentEventIndex < EVENTS.length) {
+    text = `Run in progress. Next playable phase: ${PAGE_CONFIG[getCurrentPlayablePageId()].label}.`;
+  } else if (pageId !== "prep" && pageId !== "debrief") {
+    text = `Working through ${page.label}.`;
+    if (state.pendingResolution && getCurrentPlayablePageId() === pageId) {
+      text = `Outcome logged. Review the result and keep the exercise moving.`;
+    }
+  } else if (pageId === "debrief") {
+    text = "Exercise complete. Review the winter doctrine you built.";
   }
 
   elements.progressFill.style.width = `${(completed / EVENTS.length) * 100}%`;
-  elements.progressText.textContent = label;
+  elements.progressText.textContent = text;
 }
 
 function renderToolSummary() {
-  elements.toolCounter.textContent = `${state.selectedTools.length} / ${MAX_TOOL_SELECTION} selected`;
+  elements.toolCounter.textContent = `${state.selectedTools.length} / 2 selected`;
 
   if (!state.selectedTools.length) {
     elements.toolSummary.innerHTML =
-      '<div class="empty-state">No resilience tools selected yet. The game begins once you fund exactly two.</div>';
+      '<div class="empty-state">No tools selected yet. The preparation page is where the posture gets built.</div>';
     return;
   }
 
@@ -709,24 +1034,22 @@ function renderDecisionLog() {
 }
 
 function renderSourceList() {
+  const pageItems = page.sources || [];
   elements.sourceList.innerHTML = [
-    ...SOURCE_ITEMS.map(
+    ...pageItems.map(
       (item) => `
         <article class="source-item">
           <h4>${item.title}</h4>
           <p>${item.detail}</p>
-          <p class="source-meta">${item.pages}</p>
         </article>
       `,
     ),
     `
       <article class="source-item">
-        <h4>Primary source</h4>
-        <p>
-          RenewableUK, <em>New threats and new tools: reinventing energy security for an era of instability</em>.
-        </p>
+        <h4>External dossier</h4>
+        <p>Source material and real-world background used to build this exercise.</p>
         <p class="source-meta">
-          <a class="panel-link" href="https://www.renewableuk.com/media/pqobbk3c/new-threats-and-new-tools-reinventing-energy-security-for-an-era-of-instability.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+          <a class="panel-link" href="https://www.renewableuk.com/media/pqobbk3c/new-threats-and-new-tools-reinventing-energy-security-for-an-era-of-instability.pdf" target="_blank" rel="noreferrer">Open source dossier (PDF)</a>
         </p>
       </article>
     `,
@@ -734,42 +1057,59 @@ function renderSourceList() {
 }
 
 function renderStage() {
-  if (state.screen === "prep") {
-    renderPrepScreen();
+  if (pageId === "prep") {
+    renderPreparationStage();
     return;
   }
 
-  if (state.screen === "decision") {
-    renderDecisionScreen();
+  if (pageId === "debrief") {
+    renderDebriefStage();
     return;
   }
 
-  if (state.screen === "result") {
-    renderResultScreen();
-    return;
-  }
-
-  renderDebriefScreen();
+  renderScenarioStage();
 }
 
-function renderPrepScreen() {
-  elements.phaseChip.textContent = "Preparation";
-  elements.eventCounter.textContent = `0 / ${EVENTS.length} decisions`;
-  elements.stageTitle.textContent = "Build your crisis posture";
-  elements.stageLead.textContent =
-    "The report offers six strategic tools. You only get the budget and institutional bandwidth to activate two before the winter shock sequence begins.";
-  elements.signalRow.innerHTML = [
-    "Whole-of-society resilience",
-    "Strategic reserves",
-    "Shared cyber reporting",
-  ]
-    .map((signal) => `<span class="signal-pill">${signal}</span>`)
-    .join("");
+function renderPreparationStage() {
+  if (state.gameStarted && state.currentEventIndex < EVENTS.length) {
+    const nextPage = PAGE_CONFIG[getCurrentPlayablePageId()];
+    setStageHeader({
+      chip: "Run In Progress",
+      counter: `${Math.max(1, state.currentEventIndex + 1)} / 6 decisions`,
+      title: "Your winter run is already live",
+      lead:
+        "You have already locked a posture and the crisis clock is running. Resume where you left off or reset the board and start a new winter from scratch.",
+      signals: state.selectedTools.map((toolId) => TOOL_MAP.get(toolId).title),
+    });
+
+    elements.stageBody.innerHTML = `
+      <article class="result-card">
+        <p class="result-kicker">Situation</p>
+        <h3 class="result-title">Control room standing by</h3>
+        <p class="result-copy">
+          The next open phase is <strong>${nextPage.label}</strong>. Your current posture and scores are being held in memory across the phase pages.
+        </p>
+        <div class="result-actions">
+          <a class="primary-button" href="${nextPage.path}">Resume ${nextPage.label}</a>
+          <button class="secondary-button" type="button" data-action="reset-game">Start Fresh</button>
+        </div>
+      </article>
+    `;
+    return;
+  }
+
+  setStageHeader({
+    chip: "Preparation",
+    counter: "0 / 6 decisions",
+    title: "Choose the posture you will live with",
+    lead:
+      "You can only fund and operationalise two tools before the crisis starts. Those two choices will shape how every later decision lands.",
+    signals: ["2 tools maximum", "Scores carry across pages", "No mid-crisis rebuild"],
+  });
 
   const cards = TOOLS.map((tool) => {
     const isSelected = state.selectedTools.includes(tool.id);
-    const isDisabled = !isSelected && state.selectedTools.length >= MAX_TOOL_SELECTION;
-
+    const isDisabled = !isSelected && state.selectedTools.length >= 2;
     return `
       <button
         type="button"
@@ -788,31 +1128,68 @@ function renderPrepScreen() {
     `;
   }).join("");
 
-  const canStart = state.selectedTools.length === MAX_TOOL_SELECTION;
+  const canStart = state.selectedTools.length === 2;
+  const note = state.gameStarted && state.currentEventIndex >= EVENTS.length
+    ? "Last run complete. You can now lock a fresh posture and run the winter again."
+    : "Once the first phase opens, your preparation choices are locked in until the run ends.";
 
   elements.stageBody.innerHTML = `
     <div class="prep-grid">${cards}</div>
     <div class="prep-actions">
       <button class="primary-button" type="button" data-action="start-game" ${canStart ? "" : "disabled"}>
-        Start winter exercise
+        Start Winter Exercise
       </button>
-      <button class="ghost-button" type="button" data-action="reset-tools">
-        Clear selection
+      <button class="ghost-button" type="button" data-action="clear-tools">
+        Clear Selection
       </button>
     </div>
-    <p class="stage-note">
-      The game is grounded in the report's six concluding recommendations. Tool bonuses then modify how your choices land inside each scenario.
-    </p>
+    <p class="stage-note">${note}</p>
   `;
 }
 
-function renderDecisionScreen() {
+function renderScenarioStage() {
+  const [start, end] = page.eventRange;
+
+  if (!state.gameStarted) {
+    renderLockedStage(
+      "No active exercise",
+      "Open the preparation page, choose two tools, and start the winter run before trying to enter this phase.",
+      PAGE_CONFIG.prep.path,
+      "Go to Preparation",
+    );
+    return;
+  }
+
+  if (state.currentEventIndex < start) {
+    const nextPage = PAGE_CONFIG[getCurrentPlayablePageId()];
+    renderLockedStage(
+      "Phase locked",
+      `This page is not open yet. The next live phase is ${nextPage.label}.`,
+      nextPage.path,
+      `Go to ${nextPage.label}`,
+    );
+    return;
+  }
+
+  if (state.currentEventIndex > end) {
+    renderPhaseArchive(start, end);
+    return;
+  }
+
   const event = EVENTS[state.currentEventIndex];
-  elements.phaseChip.textContent = event.phase;
-  elements.eventCounter.textContent = event.counterLabel;
-  elements.stageTitle.textContent = event.title;
-  elements.stageLead.textContent = event.lead;
-  elements.signalRow.innerHTML = event.signals.map((signal) => `<span class="signal-pill">${signal}</span>`).join("");
+
+  if (state.pendingResolution && state.pendingResolution.eventIndex === state.currentEventIndex) {
+    renderResultStage(event, state.pendingResolution);
+    return;
+  }
+
+  setStageHeader({
+    chip: page.label,
+    counter: `${state.currentEventIndex + 1} / 6 decisions`,
+    title: event.title,
+    lead: event.lead,
+    signals: event.signals,
+  });
 
   const choiceCards = event.choices
     .map((choice) => {
@@ -833,12 +1210,20 @@ function renderDecisionScreen() {
   elements.stageBody.innerHTML = `
     <p class="stage-note">${event.prompt}</p>
     <div class="choice-grid">${choiceCards}</div>
-    <p class="stage-note">${event.pageNote}</p>
+    <p class="stage-note">${event.intelNote}</p>
   `;
 }
 
-function renderResultScreen() {
-  const resolution = state.pendingResolution;
+function renderResultStage(event, resolution) {
+  const nextLabel = getContinueLabel();
+  setStageHeader({
+    chip: page.label,
+    counter: `${state.currentEventIndex + 1} / 6 decisions`,
+    title: resolution.choiceTitle,
+    lead: resolution.result,
+    signals: event.signals,
+  });
+
   const deltaChips = resolution.deltas
     .map(
       (delta) => `
@@ -849,7 +1234,7 @@ function renderResultScreen() {
     )
     .join("");
 
-  const bonusHtml = resolution.notes.length
+  const notesBlock = resolution.notes.length
     ? `
       <div class="bonus-block">
         <p class="result-kicker">Tool interactions</p>
@@ -860,35 +1245,81 @@ function renderResultScreen() {
     `
     : "";
 
-  elements.phaseChip.textContent = resolution.phase;
-  elements.eventCounter.textContent = resolution.counterLabel;
-  elements.stageTitle.textContent = resolution.eventTitle;
-  elements.stageLead.textContent = resolution.choiceTitle;
-  elements.signalRow.innerHTML = resolution.summaryTags
-    .map((tag) => `<span class="signal-pill">${tag}</span>`)
-    .join("");
-
   elements.stageBody.innerHTML = `
     <article class="result-card">
       <p class="result-kicker">Outcome</p>
       <h3 class="result-title">${resolution.choiceTitle}</h3>
       <div class="delta-row">${deltaChips}</div>
       <p class="result-copy">${resolution.result}</p>
-      ${bonusHtml}
+      ${notesBlock}
       <div class="result-actions">
-        <button class="primary-button" type="button" data-action="continue">
-          ${state.currentEventIndex === EVENTS.length - 1 ? "See debrief" : "Continue"}
-        </button>
+        <button class="primary-button" type="button" data-action="continue">${nextLabel}</button>
       </div>
     </article>
   `;
 }
 
-function renderDebriefScreen() {
+function renderPhaseArchive(start, end) {
+  const phaseHistory = state.history.filter((item) => item.eventIndex >= start && item.eventIndex <= end);
+  const nextPage = PAGE_CONFIG[getCurrentPlayablePageId()];
+
+  setStageHeader({
+    chip: page.label,
+    counter: `${end + 1} / 6 decisions`,
+    title: `${page.label} complete`,
+    lead:
+      "This phase has already been resolved. Review the calls you made here or move forward to the next live page in the run.",
+    signals: phaseHistory.map((item) => item.choiceTitle),
+  });
+
+  elements.stageBody.innerHTML = `
+    <div class="history-grid">
+      ${phaseHistory
+        .map(
+          (item) => `
+            <article class="history-card">
+              <p class="tool-tag">${item.eventTitle}</p>
+              <h4>${item.choiceTitle}</h4>
+              <p class="history-copy">${item.result}</p>
+            </article>
+          `,
+        )
+        .join("")}
+    </div>
+    <div class="debrief-actions">
+      <a class="primary-button" href="${nextPage.path}">Go to ${nextPage.label}</a>
+    </div>
+  `;
+}
+
+function renderDebriefStage() {
+  if (!state.gameStarted || state.currentEventIndex < EVENTS.length) {
+    const nextPage = PAGE_CONFIG[getCurrentPlayablePageId()];
+    renderLockedStage(
+      "Debrief unavailable",
+      "The exercise is still live. Finish the remaining phase pages before opening the debrief.",
+      nextPage.path,
+      `Go to ${nextPage.label}`,
+    );
+    return;
+  }
+
   const totalScore = getTotalScore();
   const ending = getEnding(totalScore);
   const insights = buildInsights();
   const recommendations = buildRecommendations();
+
+  setStageHeader({
+    chip: "Debrief",
+    counter: "6 / 6 decisions",
+    title: "The winter is over. The consequences are not.",
+    lead:
+      "Keeping the system live is not the same as keeping the country calm, solvent, and hard to coerce. This is the doctrine your decisions created.",
+    signals: Object.entries(state.metrics).map(
+      ([metric, value]) => `${Math.round(value)} ${METRIC_META[metric].shortLabel}`,
+    ),
+  });
+
   const historyCards = state.history
     .map(
       (item) => `
@@ -910,20 +1341,6 @@ function renderDebriefScreen() {
     )
     .join("");
 
-  elements.phaseChip.textContent = "Debrief";
-  elements.eventCounter.textContent = `6 / ${EVENTS.length} decisions`;
-  elements.stageTitle.textContent = "Your winter doctrine";
-  elements.stageLead.textContent =
-    "This is not a pass-fail exercise. The report's own logic is that you can keep the system alive and still lose politically, financially, or strategically if the wrong mechanism carries too much of the load.";
-  elements.signalRow.innerHTML = [
-    `${Math.round(state.metrics.stability)} Stability`,
-    `${Math.round(state.metrics.trust)} Trust`,
-    `${Math.round(state.metrics.fiscal)} Fiscal`,
-    `${Math.round(state.metrics.clarity)} Clarity`,
-  ]
-    .map((signal) => `<span class="signal-pill">${signal}</span>`)
-    .join("");
-
   elements.stageBody.innerHTML = `
     <div class="debrief-grid">
       <article class="ending-card">
@@ -938,7 +1355,6 @@ function renderDebriefScreen() {
             <p class="ending-score-value">${totalScore} / 400</p>
           </div>
         </div>
-
         <div class="scoreboard">
           ${Object.entries(state.metrics)
             .map(
@@ -955,7 +1371,7 @@ function renderDebriefScreen() {
       </article>
 
       <div>
-        <p class="result-kicker">Strategic readout</p>
+        <p class="result-kicker">After-action readout</p>
         <div class="insight-grid">
           ${insights
             .map(
@@ -971,7 +1387,7 @@ function renderDebriefScreen() {
       </div>
 
       <div>
-        <p class="result-kicker">Report-informed next steps</p>
+        <p class="result-kicker">Weak points</p>
         <div class="recommendation-grid">
           ${recommendations
             .map(
@@ -987,118 +1403,80 @@ function renderDebriefScreen() {
       </div>
 
       <div>
-        <p class="result-kicker">Decision history</p>
+        <p class="result-kicker">Recorded timeline</p>
         <div class="history-grid">${historyCards}</div>
       </div>
 
       <div class="debrief-actions">
-        <button class="primary-button" type="button" data-action="restart-game">Play again</button>
+        <button class="primary-button" type="button" data-action="reset-game">Play Again</button>
       </div>
     </div>
   `;
 }
 
-function getSynergyText(choice) {
-  const matchedTools = (choice.bonuses || [])
-    .filter((bonus) => state.selectedTools.includes(bonus.tool))
-    .map((bonus) => TOOL_MAP.get(bonus.tool).title);
+function renderLockedStage(title, copy, href, ctaLabel) {
+  setStageHeader({
+    chip: page.label,
+    counter: pageId === "debrief" ? "Debrief locked" : "Phase locked",
+    title,
+    lead: copy,
+    signals: ["Locked", "Saved state preserved"],
+  });
 
-  if (!matchedTools.length) {
-    return "";
-  }
-
-  if (matchedTools.length === 1) {
-    return `Synergy live: ${matchedTools[0]}`;
-  }
-
-  return `Synergy live: ${matchedTools.join(" + ")}`;
+  elements.stageBody.innerHTML = `
+    <article class="result-card">
+      <p class="result-kicker">Access control</p>
+      <h3 class="result-title">${title}</h3>
+      <p class="result-copy">${copy}</p>
+      <div class="result-actions">
+        <a class="primary-button" href="${href}">${ctaLabel}</a>
+      </div>
+    </article>
+  `;
 }
 
-function handleStageClick(event) {
-  const target = event.target.closest("[data-action]");
-
-  if (!target) return;
-
-  const action = target.getAttribute("data-action");
-
-  if (target.getAttribute("aria-disabled") === "true") {
-    return;
-  }
-
-  if (action === "toggle-tool") {
-    toggleTool(target.getAttribute("data-tool-id"));
-    return;
-  }
-
-  if (action === "reset-tools") {
-    state.selectedTools = [];
-    render();
-    return;
-  }
-
-  if (action === "start-game") {
-    startGame();
-    return;
-  }
-
-  if (action === "choose-option") {
-    resolveChoice(target.getAttribute("data-choice-id"));
-    return;
-  }
-
-  if (action === "continue") {
-    continueFromResult();
-    return;
-  }
-
-  if (action === "restart-game") {
-    resetGame();
-    return;
-  }
+function setStageHeader({ chip, counter, title, lead, signals }) {
+  elements.phaseChip.textContent = chip;
+  elements.eventCounter.textContent = counter;
+  elements.stageTitle.textContent = title;
+  elements.stageLead.textContent = lead;
+  elements.signalRow.innerHTML = (signals || []).map((signal) => `<span class="signal-pill">${signal}</span>`).join("");
 }
 
 function toggleTool(toolId) {
+  if (pageId !== "prep") return;
   if (!toolId) return;
+  if (state.gameStarted && state.currentEventIndex < EVENTS.length) return;
 
   if (state.selectedTools.includes(toolId)) {
     state.selectedTools = state.selectedTools.filter((id) => id !== toolId);
+    saveState();
     render();
     return;
   }
 
-  if (state.selectedTools.length >= MAX_TOOL_SELECTION) {
-    return;
-  }
+  if (state.selectedTools.length >= 2) return;
 
   state.selectedTools = [...state.selectedTools, toolId];
+  saveState();
   render();
 }
 
 function startGame() {
-  if (state.selectedTools.length !== MAX_TOOL_SELECTION) {
-    return;
-  }
+  if (pageId !== "prep" || state.selectedTools.length !== 2) return;
+
+  const lockedTools = [...state.selectedTools];
+  state = createDefaultState();
+  state.gameStarted = true;
+  state.selectedTools = lockedTools.filter((id) => TOOL_MAP.has(id));
 
   state.metrics = cloneMetrics(BASE_METRICS);
   state.currentEventIndex = 0;
   state.pendingResolution = null;
-  state.screen = "decision";
-  state.history = [];
-  state.patterns = {
-    supply: 0,
-    cost: 0,
-    demand: 0,
-    public: 0,
-    coordination: 0,
-    cyber: 0,
-    storage: 0,
-    attribution: 0,
-  };
-
   state.log = [
     {
       tag: "Prepared",
-      title: "Winter posture set",
+      title: "Winter posture locked",
       copy: state.selectedTools.map((toolId) => TOOL_MAP.get(toolId).title).join(" and "),
     },
   ];
@@ -1107,13 +1485,15 @@ function startGame() {
     applyEffects(TOOL_MAP.get(toolId).setupEffects);
   });
 
-  render();
+  saveState();
+  window.location.href = PAGE_CONFIG["scenario-one"].path;
 }
 
 function resolveChoice(choiceId) {
   const event = EVENTS[state.currentEventIndex];
-  const choice = event.choices.find((item) => item.id === choiceId);
+  if (!event || pageId !== event.phasePage) return;
 
+  const choice = event.choices.find((item) => item.id === choiceId);
   if (!choice) return;
 
   const cumulativeEffects = { stability: 0, trust: 0, fiscal: 0, clarity: 0 };
@@ -1122,10 +1502,7 @@ function resolveChoice(choiceId) {
   mergeEffects(cumulativeEffects, choice.effects);
 
   (choice.bonuses || []).forEach((bonus) => {
-    if (!state.selectedTools.includes(bonus.tool)) {
-      return;
-    }
-
+    if (!state.selectedTools.includes(bonus.tool)) return;
     mergeEffects(cumulativeEffects, bonus.effects);
     notes.push(bonus.note);
   });
@@ -1134,18 +1511,16 @@ function resolveChoice(choiceId) {
   updatePatterns(choice.tags);
 
   const resolution = {
-    phase: event.phase,
-    counterLabel: event.counterLabel,
-    eventTitle: event.title,
+    eventIndex: state.currentEventIndex,
     choiceTitle: choice.title,
     result: choice.result,
-    summaryTags: event.signals,
     deltas,
     notes,
   };
 
   state.history.push({
-    phase: event.phase,
+    eventIndex: state.currentEventIndex,
+    phase: page.label,
     eventTitle: event.title,
     choiceTitle: choice.title,
     result: choice.result,
@@ -1153,41 +1528,56 @@ function resolveChoice(choiceId) {
   });
 
   state.log.unshift({
-    tag: event.phase,
+    tag: page.label,
     title: choice.title,
     copy: choice.result,
   });
 
   state.pendingResolution = resolution;
-  state.screen = "result";
+  saveState();
   render();
 }
 
 function continueFromResult() {
-  if (state.currentEventIndex === EVENTS.length - 1) {
-    state.screen = "debrief";
-    state.pendingResolution = null;
-    render();
+  if (!state.pendingResolution) return;
+
+  const isLastEvent = state.currentEventIndex === EVENTS.length - 1;
+  const currentPageId = getPhaseForEventIndex(state.currentEventIndex);
+  const phaseEnd = PAGE_CONFIG[currentPageId].eventRange[1];
+
+  state.pendingResolution = null;
+
+  if (isLastEvent) {
+    state.currentEventIndex = EVENTS.length;
+    saveState();
+    window.location.href = PAGE_CONFIG.debrief.path;
+    return;
+  }
+
+  if (state.currentEventIndex === phaseEnd) {
+    state.currentEventIndex += 1;
+    saveState();
+    window.location.href = PAGE_CONFIG[getPhaseForEventIndex(state.currentEventIndex)].path;
     return;
   }
 
   state.currentEventIndex += 1;
-  state.pendingResolution = null;
-  state.screen = "decision";
+  saveState();
   render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function resetGame() {
-  const fresh = createInitialState();
-  state.screen = fresh.screen;
-  state.selectedTools = fresh.selectedTools;
-  state.metrics = fresh.metrics;
-  state.currentEventIndex = fresh.currentEventIndex;
-  state.pendingResolution = fresh.pendingResolution;
-  state.log = fresh.log;
-  state.history = fresh.history;
-  state.patterns = fresh.patterns;
+  state = createDefaultState();
+  saveState();
+
+  if (pageId !== "prep") {
+    window.location.href = PAGE_CONFIG.prep.path;
+    return;
+  }
+
   render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function mergeEffects(target, source) {
@@ -1201,7 +1591,6 @@ function applyEffects(effects) {
 
   Object.keys(METRIC_META).forEach((metric) => {
     const delta = Number(effects[metric] || 0);
-
     if (!delta) return;
 
     state.metrics[metric] = clamp(state.metrics[metric] + delta, 0, 100);
@@ -1217,26 +1606,61 @@ function updatePatterns(tags) {
   });
 }
 
+function getPhaseForEventIndex(index) {
+  if (index <= 1) return "scenario-one";
+  if (index <= 3) return "scenario-two";
+  if (index <= 5) return "scenario-three";
+  return "debrief";
+}
+
+function getCurrentPlayablePageId() {
+  if (!state.gameStarted) return "prep";
+  if (state.currentEventIndex >= EVENTS.length) return "debrief";
+  return getPhaseForEventIndex(state.currentEventIndex);
+}
+
+function getContinueLabel() {
+  const isLastEvent = state.currentEventIndex === EVENTS.length - 1;
+  if (isLastEvent) return "Go to Debrief";
+
+  const currentPageId = getPhaseForEventIndex(state.currentEventIndex);
+  const phaseEnd = PAGE_CONFIG[currentPageId].eventRange[1];
+  if (state.currentEventIndex === phaseEnd) {
+    const nextPage = PAGE_CONFIG[getPhaseForEventIndex(state.currentEventIndex + 1)];
+    return `Continue to ${nextPage.label}`;
+  }
+
+  return "Proceed to Next Decision";
+}
+
+function getSynergyText(choice) {
+  const matchedTools = (choice.bonuses || [])
+    .filter((bonus) => state.selectedTools.includes(bonus.tool))
+    .map((bonus) => TOOL_MAP.get(bonus.tool).title);
+
+  if (!matchedTools.length) return "";
+  if (matchedTools.length === 1) return `Live synergy: ${matchedTools[0]}`;
+  return `Live synergy: ${matchedTools.join(" + ")}`;
+}
+
 function getTotalScore() {
-  return Math.round(
-    Object.values(state.metrics).reduce((total, value) => total + value, 0),
-  );
+  return Math.round(Object.values(state.metrics).reduce((total, value) => total + value, 0));
 }
 
 function getEnding(totalScore) {
   if (totalScore >= 300) {
     return {
-      title: "Resilient transition",
+      title: "Resilient winter",
       copy:
-        "You kept the system stable without letting gas prices do all the work. This is closest to the report's ideal: combine reserves, flexibility, coordination, and clearer threat visibility so coercive leverage falls over time.",
+        "You kept the system upright without leaning on a single blunt instrument. The country still paid a price, but the pressure spread across buffers, flexibility, and shared discipline instead of collapsing into panic.",
     };
   }
 
   if (totalScore >= 240) {
     return {
-      title: "Managed crisis",
+      title: "Managed but exposed",
       copy:
-        "You avoided a breakdown, but at least one flank stayed exposed. The system survived because you mixed tools, not because any single doctrine solved the whole problem.",
+        "You prevented a breakdown, but one or two flanks stayed open. The system survived because your choices worked together, not because any one of them solved the whole problem.",
     };
   }
 
@@ -1244,14 +1668,14 @@ function getEnding(totalScore) {
     return {
       title: "Expensive stability",
       copy:
-        "You kept the lights on, but mainly by spending money or tolerating ambiguity. The report explicitly warns that this kind of survival can still weaken trust, industry, and national resilience.",
+        "You kept the country moving, but mainly by spending heavily or absorbing dangerous ambiguity. It worked for this winter. It may not work for the next one.",
     };
   }
 
   return {
-    title: "Fragile victory",
+    title: "Fragile calm",
     copy:
-      "The system technically survives, but your response leaves the UK more vulnerable to the next grey-zone shock. This is the report's nightmare outcome: continuity purchased without reducing coercive leverage.",
+      "The country did not fully lose control, but it came out of winter easier to pressure than it should have been. Too much of the burden still fell on blind spots, luck, and expensive fuel.",
   };
 }
 
@@ -1260,43 +1684,43 @@ function buildInsights() {
 
   if (state.patterns.demand + state.patterns.public >= 3) {
     insights.push({
-      title: "You treated citizens as part of resilience",
+      title: "You turned the public into part of the machine",
       copy:
-        "That aligns with one of the report's clearest arguments: energy security is not just generation and pipes, but also public behaviour, expectations, and psychological readiness.",
+        "That gave you options beyond simply buying more supply. Once homes and firms started moving with the system instead of only watching it, the response became harder to corner.",
     });
   } else {
     insights.push({
-      title: "Demand played too small a role",
+      title: "Demand stayed too passive",
       copy:
-        "Your doctrine leaned more on buying supply than shaping demand. The report argues that this is precisely why price shocks remain so politically dangerous.",
+        "Too much of the burden fell on supply-side fixes. When people never move, every shock ends up landing harder on markets and budgets.",
     });
   }
 
   if (state.patterns.cyber + state.patterns.coordination >= 3) {
     insights.push({
-      title: "You acted as if distributed cyber risk can cascade",
+      title: "You treated cyber ambiguity as a live battlefield",
       copy:
-        "That matches the report's warning that decentralised renewables are physically resilient but still require shared monitoring, escalation, and reporting discipline.",
+        "That helped you see the network as one system instead of a collection of operators hoping the problem stayed local.",
     });
   } else {
     insights.push({
-      title: "You trusted local containment too much",
+      title: "You let local containment do too much work",
       copy:
-        "The report is sceptical of leaving cyber incidents at working level. Without shared channels, operators learn less and boards stay under-informed.",
+        "Quiet fixes kept some moments cleaner, but they also left the wider system blind longer than was safe.",
     });
   }
 
   if (state.patterns.supply + state.patterns.cost >= 3) {
     insights.push({
-      title: "Gas remained your default shock absorber",
+      title: "You kept reaching for bought calm",
       copy:
-        "That kept the system smoother in the short term, but it mirrors the report's core critique: the UK too often pays its way through crises rather than reducing its exposure to them.",
+        "That can stabilise the screen in front of you, but it leaves the deeper pressure points standing exactly where the next shock can find them.",
     });
   } else {
     insights.push({
-      title: "You tried to reduce coercive leverage",
+      title: "You spread the burden of survival",
       copy:
-        "Your decisions repeatedly shifted pressure away from panic-priced gas and toward storage, flexibility, and clearer coordination, which is very close to the report's strategic conclusion.",
+        "Buffers, flexibility, and coordination took more of the strain, which means the same kind of attack is less likely to corner you the same way twice.",
     });
   }
 
@@ -1313,43 +1737,43 @@ function buildRecommendations() {
   sortedMetrics.slice(0, 2).forEach((metric) => {
     if (metric === "stability") {
       recommendations.push({
-        title: "Increase the system's buffer, not just its bravado",
+        title: "Build more buffer before the next winter",
         copy:
-          "The report points toward gas storage, long-duration electricity storage, and hardware stockpiles as the practical way to create time during the next shock.",
+          "You need more time in the system: gas storage, long-duration power storage, and spare hardware that can be moved fast under pressure.",
       });
     }
 
     if (metric === "trust") {
       recommendations.push({
-        title: "Normalise public participation before the next crisis",
+        title: "Train the country before you ask it to bend",
         copy:
-          "Whole-of-society resilience only works if people have already practiced it. The report's flexibility and communication recommendations are the fix here.",
+          "Public cooperation is strongest when it feels rehearsed and fair. Right now, too much still depends on people hearing a crisis ask cold.",
       });
     }
 
     if (metric === "fiscal") {
       recommendations.push({
-        title: "Stop asking the Treasury to be the entire resilience model",
+        title: "Stop making the Treasury your emergency generator",
         copy:
-          "The report's strongest cost argument is that resilience improves when flexibility and storage reduce reliance on extreme gas purchases and blunt subsidies.",
+          "A system that only stays calm when it spends big is still easy to pressure. You need more non-fiscal options on the board.",
       });
     }
 
     if (metric === "clarity") {
       recommendations.push({
-        title: "See more of the system sooner",
+        title: "Widen the field of view",
         copy:
-          "Bring renewable operators further into common security channels and lower reporting thresholds so cyber ambiguity does not outrun decision-making.",
+          "Lower reporting thresholds, tighter telemetry sharing, and better cyber escalation would help you see trouble earlier and move with more confidence.",
       });
     }
   });
 
   if (!recommendations.some((item) => item.title.includes("North Sea"))) {
     recommendations.push({
-      title: "Turn regional goodwill into North Sea operating depth",
+      title: "Make the North Sea a defended operating space",
       copy:
-        "The report sees undersea infrastructure as a shared strategic frontier. Stronger patrols, data sharing, and allied coordination reduce both delay and deniability.",
-    });
+        "Regional monitoring, patrol coordination, and shared awareness should be built as daily capability, not improvised after a strike.",
+      });
   }
 
   return recommendations.slice(0, 3);
