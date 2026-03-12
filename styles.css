@@ -7,14 +7,16 @@
   --line: rgba(169, 190, 215, 0.18);
   --line-strong: rgba(169, 190, 215, 0.36);
   --ink: #ecf3ff;
-  --muted: #9bb0cb;
-  --muted-strong: #c9d7ec;
+  --muted: #bdd0ea;
+  --muted-strong: #e2ebf8;
+  --muted-soft: #93a9c7;
   --teal: #64d6d6;
   --amber: #ffbe5c;
   --red: #ff7270;
   --green: #59cf84;
   --blue: #6da8ff;
   --violet: #8d95ff;
+  --tag-ink: #dce8fb;
   --shadow: 0 24px 70px rgba(1, 8, 19, 0.42);
   --radius-xl: 30px;
   --radius-lg: 20px;
@@ -184,13 +186,13 @@ h1 {
 .secondary-button,
 .secondary-link {
   border-color: var(--line-strong);
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted-strong);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .ghost-button {
   border-color: transparent;
-  color: var(--muted-strong);
+  color: var(--muted);
   background: transparent;
 }
 
@@ -525,9 +527,9 @@ h1 {
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--muted-strong);
+  border: 1px solid rgba(173, 198, 229, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
   font-size: 0.72rem;
 }
 
@@ -585,13 +587,13 @@ h1 {
 }
 
 .tool-card.is-disabled {
-  opacity: 0.55;
+  opacity: 0.72;
 }
 
 .tool-tag,
 .choice-tag,
 .result-kicker {
-  color: var(--muted);
+  color: var(--tag-ink);
   font-size: 0.72rem;
 }
 
@@ -635,8 +637,8 @@ h1 {
   min-height: 30px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--muted-strong);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
   font-size: 0.82rem;
 }
 
@@ -692,7 +694,7 @@ h1 {
 }
 
 .choice-synergy {
-  color: var(--teal);
+  color: #8df0e7;
   font-size: 0.9rem;
 }
 
@@ -757,14 +759,14 @@ h1 {
   min-height: 28px;
   padding: 0 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--muted);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--tag-ink);
   font-size: 0.76rem;
 }
 
 .source-meta {
   margin-top: 10px;
-  color: var(--muted);
+  color: var(--muted-soft);
   font-size: 0.8rem;
 }
 
@@ -815,8 +817,8 @@ h1 {
 .bonus-item {
   padding: 12px 14px;
   border-radius: var(--radius-md);
-  background: rgba(100, 214, 214, 0.08);
-  color: var(--muted-strong);
+  background: rgba(100, 214, 214, 0.12);
+  color: var(--ink);
 }
 
 .scoreboard {
@@ -829,14 +831,20 @@ h1 {
 .score-card {
   padding: 14px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .score-card strong {
   display: block;
   margin-top: 10px;
   font-size: 1.4rem;
+}
+
+.score-card-scale {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
 }
 
 .ending-card,
@@ -899,11 +907,11 @@ h1 {
   padding: 18px;
   border-radius: var(--radius-md);
   border: 1px dashed rgba(255, 255, 255, 0.14);
-  color: var(--muted);
+  color: var(--muted-strong);
 }
 
 .panel-link {
-  color: var(--teal);
+  color: #9af4ee;
   text-decoration: none;
 }
 

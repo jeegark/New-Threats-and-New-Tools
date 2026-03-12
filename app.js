@@ -934,8 +934,8 @@ function renderDebriefScreen() {
             <p class="score-summary">${ending.copy}</p>
           </div>
           <div class="ending-score">
-            <p class="ending-score-label">Aggregate resilience score</p>
-            <p class="ending-score-value">${totalScore}</p>
+            <p class="ending-score-label">Aggregate resilience score (out of 400)</p>
+            <p class="ending-score-value">${totalScore} / 400</p>
           </div>
         </div>
 
@@ -945,7 +945,8 @@ function renderDebriefScreen() {
               ([key, value]) => `
                 <div class="score-card">
                   <span class="mini-label">${METRIC_META[key].label}</span>
-                  <strong>${Math.round(value)}</strong>
+                  <strong>${Math.round(value)} / 100</strong>
+                  <p class="score-card-scale">Individual score out of 100</p>
                 </div>
               `,
             )
