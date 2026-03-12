@@ -118,9 +118,9 @@ textarea {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 16px;
-  padding: clamp(12px, 2vw, 18px);
+  grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
+  gap: 12px;
+  padding: clamp(10px, 1.6vw, 14px);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-xl);
   background:
@@ -132,7 +132,7 @@ textarea {
 }
 
 .hero-copy {
-  max-width: 720px;
+  max-width: 860px;
 }
 
 .eyebrow,
@@ -182,10 +182,10 @@ h1 {
 
 .hero-dek {
   margin-top: 10px;
-  max-width: 60ch;
+  max-width: 74ch;
   color: var(--ink);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.4;
 }
 
 .hero-actions {
@@ -245,7 +245,9 @@ h1 {
 
 .hero-side {
   display: grid;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
 }
 
 .schematic-card,
@@ -260,20 +262,13 @@ h1 {
 }
 
 .schematic-card {
-  padding: 14px;
+  display: grid;
+  gap: 8px;
+  padding: 10px 12px;
 }
 
 .schematic-grid {
-  position: relative;
-  height: 96px;
-  margin: 10px 0 12px;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    radial-gradient(circle at 20% 30%, rgba(100, 214, 214, 0.2), transparent 26%),
-    radial-gradient(circle at 75% 75%, rgba(255, 114, 112, 0.18), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 60%),
-    #0c182b;
+  display: none;
 }
 
 .schematic-node,
@@ -341,45 +336,45 @@ h1 {
 }
 
 .scenario-list {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   padding: 0;
   margin: 0;
   list-style: none;
   color: var(--muted-strong);
-  font-size: 0.92rem;
+  font-size: 0.76rem;
 }
 
 .scenario-list li {
-  padding-left: 18px;
-  position: relative;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(221, 234, 252, 0.18);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .scenario-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--amber);
+  display: none;
 }
 
 .hero-stat-grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
 .hero-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 12px 14px;
 }
 
 .hero-stat strong {
   display: block;
   margin-top: 6px;
-  font-size: 0.92rem;
-  line-height: 1.35;
+  font-size: 0.82rem;
+  line-height: 1.28;
   color: var(--ink);
 }
 
@@ -463,7 +458,7 @@ h1 {
 }
 
 .metric-card {
-  padding: 12px 12px 14px;
+  padding: 10px 12px;
   border-radius: var(--radius-lg);
 }
 
@@ -480,7 +475,7 @@ h1 {
 }
 
 .metric-value {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -518,15 +513,12 @@ h1 {
 }
 
 .metric-copy {
-  margin-top: 8px;
-  color: var(--ink);
-  font-size: 0.82rem;
-  line-height: 1.4;
+  display: none;
 }
 
 .progress-panel {
   margin-top: 10px;
-  padding: 12px 14px 14px;
+  padding: 10px 12px 12px;
   border-radius: var(--radius-lg);
 }
 
@@ -545,7 +537,7 @@ h1 {
 .progress-track {
   margin-top: 10px;
   overflow: hidden;
-  height: 10px;
+  height: 8px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
 }
@@ -1028,6 +1020,10 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .hero-side {
+    grid-template-columns: 1fr;
+  }
+
   .phase-nav {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1056,6 +1052,7 @@ h1 {
     padding-top: 18px;
   }
 
+  .hero-stat-grid,
   .phase-nav {
     grid-template-columns: 1fr;
   }
