@@ -68,6 +68,7 @@ input,
 select,
 textarea {
   font: inherit;
+  color: inherit;
 }
 
 .app-shell {
@@ -178,8 +179,8 @@ h1 {
 }
 
 .primary-button {
-  background: linear-gradient(135deg, var(--amber), #ffd88d);
-  color: #1d1200;
+  background: linear-gradient(135deg, #a65b00, #ffbe5c);
+  color: #fff8ee;
   box-shadow: 0 16px 26px rgba(255, 190, 92, 0.25);
 }
 
@@ -490,10 +491,10 @@ h1 {
   min-height: 34px;
   padding: 0 12px;
   border-radius: 999px;
-  color: #08111f;
+  color: var(--ink);
   font-size: 0.72rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #d9efff, #8ed4ff);
+  background: linear-gradient(135deg, #2958d9, #49a8ff);
 }
 
 .event-counter {
@@ -568,6 +569,7 @@ h1 {
 
 .tool-card {
   padding: 18px;
+  color: var(--ink);
   text-align: left;
   cursor: pointer;
   transition:
@@ -666,6 +668,7 @@ h1 {
   align-items: flex-start;
   width: 100%;
   padding: 18px;
+  color: var(--ink);
   text-align: left;
   cursor: pointer;
   transition:
