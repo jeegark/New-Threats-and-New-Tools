@@ -113,14 +113,14 @@ textarea {
 .app-shell {
   width: min(1480px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 28px 0 54px;
+  padding: 14px 0 42px;
 }
 
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 26px;
-  padding: clamp(26px, 4vw, 42px);
+  gap: 16px;
+  padding: clamp(12px, 2vw, 18px);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-xl);
   background:
@@ -175,24 +175,24 @@ h4 {
 }
 
 h1 {
-  margin-top: 12px;
-  font-size: clamp(2.8rem, 6vw, 5.4rem);
-  line-height: 0.94;
+  margin-top: 8px;
+  font-size: clamp(1.6rem, 3.8vw, 2.4rem);
+  line-height: 0.98;
 }
 
 .hero-dek {
-  margin-top: 18px;
+  margin-top: 10px;
   max-width: 60ch;
   color: var(--ink);
-  font-size: 1.06rem;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 26px;
+  gap: 10px;
+  margin-top: 14px;
 }
 
 .primary-button,
@@ -203,8 +203,8 @@ h1 {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 48px;
-  padding: 0 18px;
+  min-height: 40px;
+  padding: 0 14px;
   border-radius: 999px;
   border: 1px solid transparent;
   text-decoration: none;
@@ -245,7 +245,7 @@ h1 {
 
 .hero-side {
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .schematic-card,
@@ -260,13 +260,13 @@ h1 {
 }
 
 .schematic-card {
-  padding: 20px 20px 18px;
+  padding: 14px;
 }
 
 .schematic-grid {
   position: relative;
-  height: 150px;
-  margin: 14px 0 18px;
+  height: 96px;
+  margin: 10px 0 12px;
   border-radius: var(--radius-md);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
@@ -289,26 +289,26 @@ h1 {
 }
 
 .node-gas {
-  top: 24px;
-  left: 36px;
+  top: 18px;
+  left: 24px;
   background: var(--red);
 }
 
 .node-grid {
-  top: 56px;
-  left: 150px;
+  top: 40px;
+  left: 116px;
   background: var(--amber);
 }
 
 .node-wind {
-  top: 34px;
-  right: 44px;
+  top: 22px;
+  right: 30px;
   background: var(--teal);
 }
 
 .node-terminal {
-  bottom: 30px;
-  right: 98px;
+  bottom: 16px;
+  right: 78px;
   background: var(--blue);
 }
 
@@ -320,33 +320,34 @@ h1 {
 }
 
 .line-one {
-  top: 31px;
-  left: 48px;
-  width: 120px;
+  top: 24px;
+  left: 36px;
+  width: 92px;
   transform: rotate(15deg);
 }
 
 .line-two {
-  top: 63px;
-  left: 164px;
-  width: 150px;
+  top: 46px;
+  left: 130px;
+  width: 110px;
   transform: rotate(-10deg);
 }
 
 .line-three {
-  top: 84px;
-  left: 161px;
-  width: 100px;
+  top: 58px;
+  left: 126px;
+  width: 74px;
   transform: rotate(33deg);
 }
 
 .scenario-list {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   padding: 0;
   margin: 0;
   list-style: none;
   color: var(--muted-strong);
+  font-size: 0.92rem;
 }
 
 .scenario-list li {
@@ -367,33 +368,33 @@ h1 {
 
 .hero-stat-grid {
   display: grid;
-  gap: 14px;
+  gap: 8px;
 }
 
 .hero-stat {
-  padding: 16px 18px;
+  padding: 12px 14px;
 }
 
 .hero-stat strong {
   display: block;
-  margin-top: 8px;
-  font-size: 1rem;
-  line-height: 1.45;
+  margin-top: 6px;
+  font-size: 0.92rem;
+  line-height: 1.35;
   color: var(--ink);
 }
 
 .phase-nav {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .phase-nav-link {
   display: grid;
-  gap: 8px;
-  min-height: 84px;
-  padding: 14px 16px;
+  gap: 4px;
+  min-height: 58px;
+  padding: 10px 12px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(221, 234, 252, 0.16);
   background:
@@ -422,26 +423,26 @@ h1 {
 
 .phase-nav-step {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .phase-nav-label {
-  font-size: 1rem;
+  font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .phase-nav-status {
   color: var(--muted-strong);
-  font-size: 0.88rem;
-  line-height: 1.4;
+  font-size: 0.76rem;
+  line-height: 1.25;
 }
 
 .control-room {
-  margin-top: 22px;
+  margin-top: 14px;
 }
 
 .metric-strip {
@@ -462,7 +463,7 @@ h1 {
 }
 
 .metric-card {
-  padding: 16px 16px 18px;
+  padding: 12px 12px 14px;
   border-radius: var(--radius-lg);
 }
 
@@ -479,7 +480,7 @@ h1 {
 }
 
 .metric-value {
-  font-size: 1.9rem;
+  font-size: 1.5rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -487,8 +488,8 @@ h1 {
 .metric-bar {
   position: relative;
   overflow: hidden;
-  height: 10px;
-  margin-top: 14px;
+  height: 8px;
+  margin-top: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
 }
@@ -517,15 +518,15 @@ h1 {
 }
 
 .metric-copy {
-  margin-top: 12px;
+  margin-top: 8px;
   color: var(--ink);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 .progress-panel {
-  margin-top: 16px;
-  padding: 16px 18px 18px;
+  margin-top: 10px;
+  padding: 12px 14px 14px;
   border-radius: var(--radius-lg);
 }
 
@@ -542,9 +543,9 @@ h1 {
 }
 
 .progress-track {
-  margin-top: 14px;
+  margin-top: 10px;
   overflow: hidden;
-  height: 12px;
+  height: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
 }
@@ -562,7 +563,7 @@ h1 {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.82fr);
   gap: 18px;
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .stage-panel,
